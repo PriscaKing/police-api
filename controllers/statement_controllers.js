@@ -14,10 +14,29 @@ export const addStatement = async (req, res) => {
 };
 
 
+// export const getStatements = async (req, res, next) => {
+//     try {
+//         const allStatements = await StatementModel.find()
+//         res.json(allStatements);
+//     } catch (error) {
+//         console.log(error)
+//     }
+// };
+
+
+//How to filter dates
 export const getStatements = async (req, res, next) => {
     try {
-        const allStatements = await StatementModel.find()
-        res.json(allStatements);
+        const dateQuery = req.query.date
+
+        if (dateQuery){
+            const addData = await StatementModel.find({date:dateQuery})
+            return res.status(200).send(addData);
+        } else{
+            const addData= await StatementModel.find()
+            return res.status(200).send(addData);
+        }
+        
     } catch (error) {
         console.log(error)
     }
@@ -60,3 +79,11 @@ export const deleteStatement =async(req, res, next) =>{
         console.log(error);
     }
 }
+
+// export const filterStatement = async(req,res,next)=>{
+//     try {
+//         const date = req.body.date
+//     } catch (error) {
+        
+//     }
+// }
